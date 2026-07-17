@@ -1,0 +1,64 @@
+/* Import the base theme */
+@use '../_base/theme';
+
+/*
+ * Personal redesign — design tokens.
+ *
+ * Everything here is scoped to [data-theme='personal'] so it only applies when
+ * this theme is active (Jellyfin sets data-theme on the root for the selected
+ * color scheme). Later redesign layers (nav, home, detail, …) can read these
+ * custom properties instead of hard-coding values.
+ *
+ * Fonts: Outfit (headings) + Manrope (body/UI). Loaded from Google Fonts to
+ * match the prototype. NOTE: this requires the browser to reach fonts.gstatic.com;
+ * for a fully self-hosted/offline server we'll swap these for local @font-face
+ * files under src/assets/ in a later pass.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap');
+
+[data-theme='personal'] {
+    /* Accent (tweakable). Kept as oklch here — CSS supports it natively. */
+    --jf-redesign-accent: oklch(0.65 0.19 260);
+    --jf-redesign-accent-red: oklch(0.65 0.19 25);
+    --jf-redesign-accent-green: oklch(0.65 0.17 150);
+    --jf-redesign-accent-gold: oklch(0.75 0.15 85);
+    --jf-redesign-accent-magenta: oklch(0.65 0.19 320);
+
+    /* Surfaces & text */
+    --jf-redesign-bg: #0e0e14;
+    --jf-redesign-fg: #e8e8ee;
+    --jf-redesign-body: #c9c9d4;
+    --jf-redesign-meta: #b8b8c4;
+    --jf-redesign-label: #a0a0ac;
+    --jf-redesign-label-dim: #8a8a96;
+
+    /* Semantic colors */
+    --jf-redesign-rating: #7ee0a3;
+    --jf-redesign-fav: oklch(0.68 0.19 15);
+
+    /* Typography */
+    --jf-redesign-font-heading: 'Outfit', sans-serif;
+    --jf-redesign-font-body: 'Manrope', sans-serif;
+
+    /* Radii */
+    --jf-redesign-radius: 10px;
+    --jf-redesign-radius-sm: 8px;
+    --jf-redesign-radius-pill: 999px;
+
+    /* Spacing / layout */
+    --jf-redesign-page-pad: 48px;
+    --jf-redesign-row-gap: 38px;
+    --jf-redesign-grid-gap: 18px;
+
+    /* Shadows / glow */
+    --jf-redesign-shadow-card: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --jf-redesign-shadow-poster: 0 20px 50px rgba(0, 0, 0, 0.55);
+
+    /* Apply the base look of the redesign. Screen-specific styling arrives in later layers. */
+    &,
+    html {
+        background-color: var(--jf-redesign-bg);
+        color: var(--jf-redesign-fg);
+        font-family: var(--jf-redesign-font-body);
+    }
+}
