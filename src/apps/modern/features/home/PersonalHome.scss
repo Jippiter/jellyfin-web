@@ -1,0 +1,302 @@
+/*
+ * Personal redesign — Home screen (hero + rails).
+ * Reads the design tokens defined in src/themes/personal/theme.scss when the
+ * Personal theme is active, with hard fallbacks so it also looks right otherwise.
+ */
+
+$pad: var(--jf-redesign-page-pad, 48px);
+$heading: var(--jf-redesign-font-heading, 'Outfit', sans-serif);
+$body: var(--jf-redesign-font-body, 'Manrope', sans-serif);
+$fg: var(--jf-redesign-fg, #e8e8ee);
+$meta: var(--jf-redesign-meta, #b8b8c4);
+$bg: var(--jf-redesign-bg, #0e0e14);
+
+.personalHome {
+    font-family: $body;
+    color: $fg;
+    background: $bg;
+    min-height: 100%;
+}
+
+/* ---------------- Hero ---------------- */
+.personalHero {
+    position: relative;
+    height: 78vh;
+    min-height: 520px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
+.personalHero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+}
+
+.personalHero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            to top,
+            #{$bg} 4%,
+            rgba(14, 14, 20, 0.25) 45%,
+            transparent 100%
+        );
+}
+
+.personalHero-content {
+    position: relative;
+    max-width: 720px;
+    padding: 0 $pad 6vh;
+}
+
+.personalHero-kicker {
+    font-family: $heading;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--jf-palette-primary-main, #438aff);
+    margin-bottom: 14px;
+}
+
+.personalHero-title {
+    font-family: $heading;
+    font-weight: 800;
+    font-size: 58px;
+    line-height: 1.02;
+    margin: 0 0 16px;
+    text-wrap: balance;
+}
+
+.personalHero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: $meta;
+    margin-bottom: 16px;
+
+    .personalHero-rating {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+        color: var(--jf-redesign-rating, #7ee0a3);
+    }
+
+    .personalHero-hd {
+        padding: 1px 6px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 4px;
+        font-size: 11px;
+    }
+}
+
+.personalHero-overview {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--jf-redesign-body, #c9c9d4);
+    margin: 0 0 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.personalHero-actions {
+    display: flex;
+    gap: 12px;
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: $body;
+        font-weight: 700;
+        font-size: 15px;
+        padding: 12px 26px;
+        border-radius: var(--jf-redesign-radius-sm, 8px);
+        border: none;
+        cursor: pointer;
+    }
+}
+
+.personalHero-play {
+    background: #fff;
+    color: #0e0e14;
+
+    &:hover { background: #d8d8e0; }
+}
+
+.personalHero-info {
+    background: rgba(255, 255, 255, 0.12);
+    color: $fg;
+    backdrop-filter: blur(6px);
+
+    &:hover { background: rgba(255, 255, 255, 0.2); }
+}
+
+.personalHero-dots {
+    position: absolute;
+    right: $pad;
+    bottom: 6vh;
+    display: flex;
+    gap: 8px;
+
+    button {
+        width: 8px;
+        height: 8px;
+        padding: 0;
+        border-radius: 999px;
+        border: none;
+        background: rgba(255, 255, 255, 0.35);
+        cursor: pointer;
+
+        &.is-active {
+            width: 22px;
+            background: #fff;
+        }
+    }
+}
+
+/* ---------------- Rows ---------------- */
+.personalHome-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jf-redesign-row-gap, 38px);
+    padding: 32px 0 64px;
+}
+
+.personalRow-header {
+    font-family: $heading;
+    font-weight: 700;
+    font-size: 19px;
+    margin: 0 0 14px;
+    padding: 0 $pad;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.personalRow-badge {
+    font-family: $body;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: $meta;
+}
+
+.personalRow-rail {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-padding: 0 $pad;
+    padding: 6px $pad 14px;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar { display: none; }
+}
+
+/* ---------------- Card ---------------- */
+.personalCard {
+    position: relative;
+    flex: 0 0 auto;
+    width: 172px;
+    height: 258px;
+    border-radius: var(--jf-redesign-radius, 10px);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--jf-redesign-shadow-card, 0 8px 24px rgba(0, 0, 0, 0.45));
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    outline: none;
+
+    &:hover,
+    &:focus-visible {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 32px var(--personal-glow, rgba(0, 0, 0, 0.6));
+    }
+}
+
+.personalCard-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.personalCard-rank {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    font-family: $heading;
+    font-weight: 800;
+    font-size: 12px;
+    color: #fff;
+}
+
+.personalCard-heart {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 2;
+
+    .MuiIconButton-root {
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(6px);
+        color: #fff;
+
+        &:hover { background: rgba(0, 0, 0, 0.65); }
+    }
+}
+
+.personalCard-overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 24px 12px 12px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+}
+
+.personalCard-title {
+    font-family: $heading;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.2;
+    text-wrap: balance;
+}
+
+.personalCard-sub {
+    font-size: 12px;
+    color: $meta;
+    margin-top: 2px;
+}
+
+.personalCard-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+
+    span {
+        display: block;
+        height: 100%;
+        background: var(--jf-palette-primary-main, #438aff);
+    }
+}
