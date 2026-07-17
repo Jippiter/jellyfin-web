@@ -1,5 +1,5 @@
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models/base-item-dto';
-import React, { type FC, type KeyboardEvent, useCallback } from 'react';
+import React, { type FC, type KeyboardEvent, useCallback, useState } from 'react';
 
 import { getCardImageUrl } from 'components/cardbuilder/utils/url';
 import { appRouter } from 'components/router/appRouter';
@@ -21,12 +21,16 @@ const CARD_WIDTH = 172;
 
 const PersonalCard: FC<Props> = ({ item, rank, showProgress }) => {
     const { api } = useApi();
+    const [ imgFailed, setImgFailed ] = useState(false);
     const hue = hueFromString(item.Name ?? item.Id ?? '');
     const { imgUrl } = getCardImageUrl({ api, item: item as ItemDto, options: { width: CARD_WIDTH } });
+    const showImg = Boolean(imgUrl) && !imgFailed;
 
     const onOpen = useCallback(() => {
         appRouter.showItem(item);
     }, [ item ]);
+
+    const onImgError = useCallback(() => setImgFailed(true), []);
 
     const onKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -46,13 +50,19 @@ const PersonalCard: FC<Props> = ({ item, rank, showProgress }) => {
             onClick={onOpen}
             onKeyDown={onKeyDown}
             style={{
-                background: imgUrl ? undefined : cardGradient(hue),
+                background: showImg ? undefined : cardGradient(hue),
                 // Per-title glow used on hover (see scss)
                 ['--personal-glow' as string]: cardGlow(hue)
             }}
         >
-            {imgUrl && (
-                <img className='personalCard-img' src={imgUrl} alt={item.Name ?? ''} loading='lazy' />
+            {showImg && (
+                <img
+                    className='personalCard-img'
+                    src={imgUrl}
+                    alt={item.Name ?? ''}
+                    loading='lazy'
+                    onError={onImgError}
+                />
             )}
 
             {typeof rank === 'number' && (

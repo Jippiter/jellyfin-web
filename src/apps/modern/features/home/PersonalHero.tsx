@@ -26,6 +26,14 @@ const formatRuntime = (ticks?: number | null): string | null => {
     return h > 0 ? `${h}h ${m}m` : `${m}m`;
 };
 
+/** Hero backdrop image that quietly disappears (revealing the gradient) if it fails to load. */
+const HeroImage: FC<{ src?: string }> = ({ src }) => {
+    const [ failed, setFailed ] = useState(false);
+    const onError = useCallback(() => setFailed(true), []);
+    if (!src || failed) return null;
+    return <img className='personalHero-img' src={src} alt='' onError={onError} />;
+};
+
 const HeroDot: FC<{ index: number; active: boolean; onSelect: (i: number) => void }> = ({ index, active, onSelect }) => {
     const onClick = useCallback(() => onSelect(index), [ index, onSelect ]);
     return (
@@ -76,7 +84,7 @@ const PersonalHero: FC<Props> = ({ items }) => {
             className='personalHero'
             style={{ background: heroGradient(hue) }}
         >
-            {imgUrl && <img className='personalHero-img' src={imgUrl} alt='' />}
+            <HeroImage src={imgUrl} />
             <div className='personalHero-scrim' />
 
             <div className='personalHero-content'>
