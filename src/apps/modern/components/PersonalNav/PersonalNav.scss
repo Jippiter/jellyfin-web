@@ -1,0 +1,94 @@
+/* Personal redesign — global top navigation. */
+
+$heading: var(--jf-redesign-font-heading, 'Outfit', sans-serif);
+$body: var(--jf-redesign-font-body, 'Manrope', sans-serif);
+$fg: var(--jf-redesign-fg, #e8e8ee);
+$meta: var(--jf-redesign-meta, #b8b8c4);
+$accent: var(--jf-palette-primary-main, #438aff);
+
+.personalNav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+    padding: 10px 48px;
+    font-family: $body;
+}
+
+.personalNav-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: $fg;
+    flex-shrink: 0;
+}
+
+.personalNav-logoMark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #{$accent}, oklch(0.4 0.12 300));
+    font-family: $heading;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+}
+
+.personalNav-logoText {
+    font-family: $heading;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+}
+
+.personalNav-links {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    flex: 1;
+}
+
+.personalNav-link {
+    text-decoration: none;
+    color: $meta;
+    font-size: 15px;
+    font-weight: 600;
+    transition: color 0.15s ease;
+    white-space: nowrap;
+
+    &:hover {
+        color: $fg;
+    }
+
+    &.is-active {
+        color: $fg;
+    }
+}
+
+.personalNav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    flex-shrink: 0;
+
+    .MuiIconButton-root {
+        color: $fg;
+    }
+}
+
+/* Hide the library links on small screens (logo + actions remain). */
+@media (max-width: 700px) {
+    .personalNav {
+        gap: 16px;
+        padding: 10px 16px;
+    }
+
+    .personalNav-links {
+        display: none;
+    }
+}

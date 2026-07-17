@@ -10,8 +10,8 @@ import OffsetAppBar from 'components/OffsetAppBar';
 import ThemeCss from 'components/ThemeCss';
 import { useApi } from 'hooks/useApi';
 
-import AppToolbar from './components/AppToolbar';
 import AppDrawer, { isDrawerPath } from './components/drawers/AppDrawer';
+import PersonalNav from './components/PersonalNav/PersonalNav';
 import LibraryToolbar from './features/libraries/components/LibraryToolbar';
 import { LibraryProvider } from './features/libraries/hooks/useLibrary';
 import { isLibraryPath } from './features/libraries/utils/path';
@@ -43,11 +43,7 @@ export const Component = () => {
             >
                 <StrictMode>
                     <OffsetAppBar dense elevation={4}>
-                        <AppToolbar
-                            isDrawerAvailable={!isMediumScreen && isDrawerAvailable}
-                            isDrawerOpen={isDrawerOpen}
-                            onDrawerButtonClick={onToggleDrawer}
-                        />
+                        <PersonalNav />
                         {isLibraryPath(location.pathname) && <LibraryToolbar />}
                     </OffsetAppBar>
 
